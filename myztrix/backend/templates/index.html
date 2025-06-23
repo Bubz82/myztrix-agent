@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>General's Agent: Inbox Event Scanner</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1e1e1e;
+      color: #f0f0f0;
+      padding: 2em;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      margin-bottom: 1em;
+      text-align: center;
+      user-select: none;
+    }
+    .event {
+      background: #2c2c2c;
+      border: 1px solid #555;
+      border-radius: 8px;
+      padding: 1em 1.5em;
+      margin-bottom: 1em;
+      box-shadow: 0 0 10px #333;
+    }
+    .event strong {
+      font-size: 1.2em;
+      display: block;
+      margin-bottom: 0.25em;
+      color: #ffa500;
+    }
+    .description {
+      margin-bottom: 0.5em;
+      color: #ccc;
+    }
+    .time {
+      font-style: italic;
+      color: #999;
+      margin-bottom: 1em;
+    }
+    .btn-group {
+      display: flex;
+      gap: 1em;
+    }
+    button {
+      flex: 1;
+      background: #444;
+      color: white;
+      border: none;
+      padding: 0.5em 0;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      user-select: none;
+    }
+    button:hover {
+      background: #666;
+    }
+    button.confirm {
+      background: #28a745;
+    }
+    button.confirm:hover {
+      background: #218838;
+    }
+    button.ignore {
+      background: #dc3545;
+    }
+    button.ignore:hover {
+      background: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Incoming Events</h1>
+  <div id="events">Loading events…</div>
+
+  <script>
+    async function loadEvents() {
+      const res = await fetch('/scan');
+      const data = await res.json();
+      const container = document.getElementById('events');
+      container.innerHTML = ''; // Clear loading text
+
+      if (data.status === 'success' && data.events.length) {
+        data.events.forEach(event => {
+          const div = document.createElement('div');
+          div.className = 'event';
+          div.innerHTML = `
+            <strong>${event.summary}</strong>
+            <div class="description">${event.description || ''}</div>
+            <div class="time">${new Date(event.start_time).toLocaleString()} → ${new Date(event.end_time).toLocaleString()}</div>
+            <div class="btn-group">
+              <button class="confirm">Confirm</button>
+              <button class="ignore">Ignore</button>
+            </div>
+          `;
+
+          const confirmBtn = div.querySelector('.confirm');
+          const ignoreBtn = div.querySelector('.ignore');
+
+          confirmBtn.onclick = async () => {
+            const res = await fetch('/confirm', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(event)
+            });
+            const resp = await res.json();
+            if (resp.status === 'success') {
+              alert('Event confirmed and added to calendar.');
+              div.remove();
+            } else {
+              alert('Error confirming event: ' + (resp.message || 'Unknown error'));
+            }
+          };
+
+          ignoreBtn.onclick = async () => {
+            const res = await fetch('/decline', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(event)
+            });
+            const resp = await res.json();
+            if (resp.status === 'success') {
+              alert('Event ignored and saved.');
+              div.remove();
+            } else {
+              alert('Error ignoring event: ' + (resp.message || 'Unknown error'));
+            }
+          };
+
+          container.appendChild(div);
+        });
+      } else {
+        container.innerHTML = '<p>No incoming events detected.</p>';
+      }
+    }
+
+    loadEvents();
+  </script>
+</body>
+</html>
+

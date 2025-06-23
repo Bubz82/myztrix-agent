@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Declined Events - Your Trash Bin</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; background: #1c1c1c; color: #eee; }
+    .event { padding: 15px; margin-bottom: 10px; background: #2e2e2e; border-radius: 8px; }
+    button { margin-left: 10px; padding: 5px 10px; background: #ff4b5c; border: none; border-radius: 4px; color: white; cursor: pointer; }
+    button.recover { background: #4caf50; }
+  </style>
+</head>
+<body>
+  <h1>Declined Events</h1>
+  <div id="events-container">
+    {% for event in events %}
+      <div class="event" data-event='{{ event|tojson }}'>
+        <strong>{{ event.summary }}</strong> — {{ event.start_time }}
+        <button class="recover" onclick="recoverEvent(this)">Recover</button>
+        <button class="delete" onclick="deleteEvent(this)">Delete</button>
+      </div>
+    {% else %}
+      <p>No declined events here. Lucky you.</p>
+    {% endfor %}
+  </div>
+
+<script>
+async function recoverEvent(button) {
+  const eventDiv = button.parentNode;
+  const event = JSON.parse(eventDiv.getAttribute('data-event'));
+
+  button.disabled = true;
+  button.textContent = 'Recovering...';
+
+  try {
+    const res = await fetch('/recover', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(event)
+    });
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      alert('Event recovered. Back in the game, baby.');
+      eventDiv.remove();
+    } else {
+      alert('Error recovering event: ' + data.message);
+      button.disabled = false;
+      button.textContent = 'Recover';
+    }
+  } catch (e) {
+    alert('Network or server error. Try again later.');
+    button.disabled = false;
+    button.textContent = 'Recover';
+  }
+}
+
+async function deleteEvent(button) {
+  const eventDiv = button.parentNode;
+  const event = JSON.parse(eventDiv.getAttribute('data-event'));
+
+  if (!confirm('Are you sure? This is forever.')) return;
+
+  button.disabled = true;
+  button.textContent = 'Deleting...';
+
+  try {
+    const res = await fetch('/delete_declined', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(event)
+    });
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      alert('Deleted. Gone like a bad habit.');
+      eventDiv.remove();
+    } else {
+      alert('Error deleting event: ' + data.message);
+      button.disabled = false;
+      button.textContent = 'Delete';
+    }
+  } catch (e) {
+    alert('Network or server error. Try again later.');
+    button.disabled = false;
+    button.textContent = 'Delete';
+  }
+}
+</script>
+</body>
+</html>

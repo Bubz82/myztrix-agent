@@ -1,0 +1,13 @@
+import os, json
+
+PENDING_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pending_events.json')
+
+print(f"Pending events file exists? {os.path.exists(PENDING_FILE)} at {PENDING_FILE}")
+
+if os.path.exists(PENDING_FILE):
+    try:
+        with open(PENDING_FILE, 'r') as f:
+            data = json.load(f)
+        print(f"Loaded pending_events.json successfully, contains {len(data)} events")
+    except Exception as e:
+        print(f"Failed to load pending_events.json: {e}")

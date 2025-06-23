@@ -1,0 +1,113 @@
+Folder PATH listing
+Volume serial number is 8E85-B41D
+C:.
+¦   declined_events.json
+¦   generals_calendar_agent.txt
+¦   gmail_agent.log
+¦   install_launch_agent.py
+¦   MyztrixAgent.spec
+¦   pending_events.json
+¦   punkt_trace.txt
+¦   README.md
+¦   requirements.txt
+¦   run_agent.py
+¦   setup.py
+¦   structure.txt
+¦   test_agent.log
+¦   test_agent.py
+¦   test_nltk.py
+¦   test_oauth.py
+¦   watchdog.py
+¦   
++---backend
+¦   ¦   calendar_agent.py
+¦   ¦   calendar_flask.py
+¦   ¦   calendar_handler.py
+¦   ¦   calendar_inserter.py
+¦   ¦   calendar_manager.py
+¦   ¦   cli_event_review.py
+¦   ¦   config.py
+¦   ¦   direct_test.py
+¦   ¦   events.json
+¦   ¦   event_creator.py
+¦   ¦   event_extractor.py
+¦   ¦   gmail_agent.log
+¦   ¦   gmail_agent.py
+¦   ¦   gmail_auth.py
+¦   ¦   gmail_parser.py
+¦   ¦   gmail_scraper.py
+¦   ¦   hello.py
+¦   ¦   install_launch_agent.py
+¦   ¦   macos_bar_app.py
+¦   ¦   macos_notifications.py
+¦   ¦   main.py
+¦   ¦   nltk_imports.txt
+¦   ¦   notifications.py
+¦   ¦   postinstall.sh
+¦   ¦   scheduler.py
+¦   ¦   search_results.txt
+¦   ¦   simple_server.py
+¦   ¦   test_confirm.py
+¦   ¦   __init__.py
+¦   ¦   
+¦   +---credentials
+¦   ¦       credentials.json
+¦   ¦       token.json
+¦   ¦       
+¦   +---templates
+¦   ¦       declined.html
+¦   ¦       index.html
+¦   ¦       
+¦   +---__pycache__
+¦           calendar_agent.cpython-311.pyc
+¦           calendar_flask.cpython-311.pyc
+¦           calendar_handler.cpython-311.pyc
+¦           calendar_manager.cpython-311.pyc
+¦           config.cpython-311.pyc
+¦           event_creator.cpython-311.pyc
+¦           gmail_agent.cpython-311.pyc
+¦           gmail_scraper.cpython-311.pyc
+¦           macos_notifications.cpython-311.pyc
+¦           main.cpython-311.pyc
+¦           notifications.cpython-311.pyc
+¦           __init__.cpython-311.pyc
+¦           
++---build
+¦   +---MyztrixAgent
+¦       ¦   Analysis-00.toc
+¦       ¦   base_library.zip
+¦       ¦   EXE-00.toc
+¦       ¦   MyztrixAgent.pkg
+¦       ¦   PKG-00.toc
+¦       ¦   PYZ-00.pyz
+¦       ¦   PYZ-00.toc
+¦       ¦   warn-MyztrixAgent.txt
+¦       ¦   xref-MyztrixAgent.html
+¦       ¦   
+¦       +---localpycs
+¦               pyimod01_archive.pyc
+¦               pyimod02_importers.pyc
+¦               pyimod03_ctypes.pyc
+¦               pyimod04_pywin32.pyc
+¦               struct.pyc
+¦               
++---Config
+¦       credentials.json
+¦       
++---credentials
+¦       credentials.json
+¦       token.json
+¦       
++---dist
+¦       MyztrixAgent.exe
+¦       
++---static
++---templates
+¦       index.html
+¦       
++---tests
+        conftest.py
+        test_api.py
+        test_nltk.py
+        test_scheduler.py
+        

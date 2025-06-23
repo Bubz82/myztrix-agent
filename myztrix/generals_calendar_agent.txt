@@ -1,0 +1,39 @@
+generals_calendar_agent/
+│
+├── backend/
+│   ├── main.py                 # Flask entry point
+│   ├── routes.py               # Flask routes (API endpoints)
+│   ├── scheduler.py            # Notification scheduling logic (via APScheduler or cron)
+│   ├── gmail_parser.py         # Gmail API integration & email scraping logic
+│   ├── calendar_sync.py        # Google Calendar API integration
+│   ├── event_detector.py       # NLP logic to identify event triggers in emails
+│   ├── notifier.py             # Push notifications (macOS/local/desktop)
+│   └── utils.py                # Helpers, date formatting, parsing utils
+│
+├── config/
+│   ├── credentials.json        # OAuth creds for Gmail/Calendar
+│   ├── settings.py             # App-wide config (API scopes, timing, etc.)
+│
+├── templates/
+│   └── dashboard.html          # (Optional) Simple dashboard for testing
+│
+├── static/
+│   └── style.css               # UI styling if needed
+│
+├── token.pkl                   # Stores authorized user token (OAuth flow)
+├── requirements.txt            # All needed packages
+└── README.md                   # Setup & usage instructions
+
+
+generals_agent/
+├── backend/
+│   ├── __init__.py
+│   ├── gmail_parser.py         # Auth + email scraping + message parsing
+│   ├── event_detector.py       # NLP to extract event info (date, time, title)
+│   ├── calendar_sync.py        # Google Calendar API integration
+│   └── scheduler.py            # Schedules notifications using APScheduler
+├── token.pkl                   # OAuth token, already handled in your setup
+├── credentials.json            # OAuth credentials for Google API
+├── main.py                     # Flask entry point (shown above)
+├── requirements.txt            # All dependencies
+└── README.md                   # Setup instructions

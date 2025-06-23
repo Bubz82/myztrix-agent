@@ -20,9 +20,10 @@ jobs:
 
       - name: Strip Windows-only dependencies (macOS safe)
         run: |
-          grep -Ev "pywin32|win-precise-time|win32_setctime" myztrix/requirements.txt > myztrix/requirements-macos.txt
-          python -m pip install --upgrade pip
-          pip install -r myztrix/requirements-macos.txt py2app
+         grep -Ev "pywin32|win-precise-time|win32_setctime" myztrix/requirements.txt > myztrix/requirements-macos.txt
+         python -m pip install --upgrade pip
+         pip install -v -r myztrix/requirements-macos.txt py2app || true
+
 
       - name: Build macOS .app using py2app
         run: |

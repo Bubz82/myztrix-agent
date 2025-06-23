@@ -1,40 +1,43 @@
-name: macOS Build & Package
+name: Build macOS .app and .dmg for MyztrixAgent
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-macos:
     runs-on: macos-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Set up Python 3.11
+      - name: Set up Python 3.x
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r myztrix/requirements.txt
+          pip install -r myztrix/requirements.txt py2app
 
-      - name: Build Myztrix Agent executable
+      - name: Build macOS .app using py2app
         run: |
           cd myztrix
-          # Adjust this to your actual build command, e.g. pyinstaller or your packaging tool
-          pyinstaller --onefile backend/main.py --name MyztrixAgent
+          python setup.py py2app
 
-      - name: Package as DMG
+      - name: Create .dmg
         run: |
-          mkdir -p dist
-          hdiutil create -volname MyztrixAgent -srcfolder dist -ov dist/MyztrixAgent.dmg
+          mkdir -p dist_dmg
+          hdiutil create dist_dmg/MyztrixAgent.dmg \
+            -volname "MyztrixAgent" \
+            -srcfolder dist/MyztrixAgent.app \
+            -ov -format UDZO
 
-      - name: Upload build artifact
+      - name: Upload .dmg Artifact
         uses: actions/upload-artifact@v3
         with:
           name: MyztrixAgent-dmg
-          path: dist/MyztrixAgent.dmg
+          path: myztrix/dist_dmg/MyztrixAgent.dmg

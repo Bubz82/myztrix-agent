@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python 3.x
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -30,14 +30,14 @@ jobs:
 
       - name: Create .dmg
         run: |
-          mkdir -p dist_dmg
-          hdiutil create dist_dmg/MyztrixAgent.dmg \
+          mkdir -p myztrix/dist_dmg
+          hdiutil create myztrix/dist_dmg/MyztrixAgent.dmg \
             -volname "MyztrixAgent" \
-            -srcfolder dist/MyztrixAgent.app \
+            -srcfolder myztrix/dist/MyztrixAgent.app \
             -ov -format UDZO
 
       - name: Upload .dmg Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: MyztrixAgent-dmg
           path: myztrix/dist_dmg/MyztrixAgent.dmg

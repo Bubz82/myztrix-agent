@@ -1,5 +1,5 @@
 addict==2.4.0
--e git+https://github.com/ArcadeAI/openai-agents-arcade.git@d5b553e6d7d7829f49b7890b32339421b011a64c#egg=agents_arcade
+-e git+https://github.com/YOUR_USERNAME/cognee.git@main#egg=cognee
 aiobotocore==2.23.0
 aiofiles==24.1.0
 aiohappyeyeballs==2.6.1
@@ -46,7 +46,6 @@ cleo==2.1.0
 click==8.1.8
 click-default-group==1.2.4
 cloudpathlib==0.21.1
--e git+https://github.com/topoteretes/cognee.git@135e5b4651a1485567b59191c6dcdce39fa02bf1#egg=cognee
 colorama==0.4.6
 coloredlogs==15.0.1
 constantly==23.10.4

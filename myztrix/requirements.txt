@@ -80,7 +80,7 @@ eval_type_backport==0.2.2
 executing==2.2.0
 faiss-cpu==1.11.0
 fake-useragent==2.2.0
-fastapi==0.115.7
+fastapi>=0.115.7,<0.116.0
 fastapi-users==14.0.1
 fastapi-users-db-sqlalchemy==7.0.0
 fastjsonschema==2.21.1

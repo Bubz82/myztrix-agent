@@ -1,5 +1,5 @@
 addict==2.4.0
--e git+https://github.com/Bubz82/cognee.git@main#egg=cognee
+-e git+https://github.com/topoteretes/cognee.git@135e5b4651a1485567b59191c6dcdce39fa02bf1#egg=cognee
 aiobotocore==2.23.0
 aiofiles==24.1.0
 aiohappyeyeballs==2.6.1

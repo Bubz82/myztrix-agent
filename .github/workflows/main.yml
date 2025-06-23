@@ -1,0 +1,43 @@
+name: Build macOS .app and .dmg for MyztrixAgent
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r myztrix/requirements.txt py2app
+
+      - name: Build macOS .app using py2app
+        run: |
+          cd myztrix
+          python setup.py py2app
+
+      - name: Create .dmg
+        run: |
+          mkdir -p dist_dmg
+          hdiutil create dist_dmg/MyztrixAgent.dmg \
+            -volname "MyztrixAgent" \
+            -srcfolder dist/MyztrixAgent.app \
+            -ov -format UDZO
+
+      - name: Upload .dmg Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: MyztrixAgent-dmg
+          path: myztrix/dist_dmg/MyztrixAgent.dmg

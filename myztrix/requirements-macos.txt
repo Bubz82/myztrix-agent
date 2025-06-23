@@ -1,7 +1,0 @@
-# Use all cross-platform dependencies from base file
--r requirements.txt
-
-# Exclude Windows-only packages
---exclude pywin32
---exclude win-precise-time
---exclude win32_setctime

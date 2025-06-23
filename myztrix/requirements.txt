@@ -346,7 +346,7 @@ typer==0.16.0
 types-requests==2.32.4.20250611
 typing-inspect==0.9.0
 typing-inspection==0.4.1
-typing_extensions==4.13.2
+typing_extensions>=4.12.2,<4.14.0
 tzdata==2025.2
 tzlocal==5.3.1
 uc-micro-py==1.0.3
